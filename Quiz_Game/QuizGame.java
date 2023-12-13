@@ -6,54 +6,80 @@ import java.util.Scanner;
 
 public class QuizGame {
     public static void main(String[] args){
-        checkAnswerIsCorrect();
+        awardMarks();
 //        main method
     }
 //    Ask questions
     public static String[] askQuestions(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Q1: What is the capital city of Kenya: ");
-        String answerQuestionOne = scanner.nextLine();
-        System.out.print("Q2: What is the capital city of Uganda: ");
-        String answerQuestionTwo = scanner.nextLine();
-        System.out.print("Q3: What is the capital city of Tanzania: ");
-        String answerQuestionThree = scanner.nextLine();
 
-        String [] answersToQuestions = new String[]{answerQuestionOne,answerQuestionTwo,answerQuestionThree};
+        String []  askQuestions= new String[]{
+                "Q1: What is the capital city of Kenya: ",
+                "Q2: What is the capital city of Uganda: ",
+                "Q3: What is the capital city of Tanzania:"
+        };
 
-        return answersToQuestions;
+        return askQuestions;
     }
 //    Check if answer is correct
-    public static void checkAnswerIsCorrect(){
-        String [] answers = new  String[]{"Nairobi", "Kampala", "Dodoma"};
-        int points;
-        int sumPoints=0;
-        String[] userAnswers = askQuestions();
-        if (Objects.equals(userAnswers[0], answers[0])){
-            System.out.println("You are correct");
-            points=3;
-            sumPoints +=points;
-            System.out.println("You have been awarded 3 points");
+    public static int checkAnswerIsCorrect() {
+        Scanner scanner = new Scanner(System.in);
+        String [] questionAnswers = new  String[]{"Nairobi", "Kampala", "Dodoma"};
+        String questionAnswer = "";
+        int maximumPoints;
+        int sumPoints =0;
+        for (String question : askQuestions()) {
+            for (int i = 0;i<3;i++){
+                System.out.print(question);
+                questionAnswer = scanner.nextLine();
+                if(Objects.equals(questionAnswer.toUpperCase(), questionAnswers[0].toUpperCase())){
+                    if(i==0){
+                        maximumPoints=3;
+                    } else if (i==1) {
+                        maximumPoints=2;
+                    } else {
+                        maximumPoints=1;
+                    }
+                    sumPoints +=maximumPoints;
+                    break;
+                }
+                if(Objects.equals(questionAnswer.toUpperCase(), questionAnswers[1].toUpperCase())){
+                    if(i==0){
+                        maximumPoints=3;
+                    } else if (i==1) {
+                        maximumPoints=2;
+                    } else {
+                        maximumPoints=1;
+                    }
+                    sumPoints +=maximumPoints;
+                    break;
+                }
+                if(Objects.equals(questionAnswer.toUpperCase(), questionAnswers[2].toUpperCase())){
+                    if(i==0){
+                        maximumPoints=3;
+                    } else if (i==1) {
+                        maximumPoints=2;
+                    } else {
+                        maximumPoints=1;
+                    }
+                    sumPoints +=maximumPoints;
+                    break;
+                }
 
+            }
         }
-        if (Objects.equals(userAnswers[1], answers[1])){
-            System.out.println("You are correct");
-            points=3;
-            sumPoints +=points;
-            System.out.println("You have been awarded 3 points");
-        }
-        if (Objects.equals(userAnswers[2], answers[2])){
-            System.out.println("You are correct");
-            points=3;
-            sumPoints +=points;
-            System.out.println("You have been awarded 3 points");
-        }
-        System.out.println("Your total Points are: "+sumPoints);
-
-
+//        System.out.println(sumPoints);
+        return sumPoints;
     }
-//    award points
     public static void awardMarks(){
+        int sumPoints=checkAnswerIsCorrect();
+        System.out.println(sumPoints);
+        int totalPoints=9;
+        double percentageScore;
+        percentageScore = ((double) sumPoints / totalPoints)*100;
+
+        System.out.println("Your Total points is: "+sumPoints);
+        System.out.print("Your percentage score is : "+percentageScore);
+
 
     }
 }
