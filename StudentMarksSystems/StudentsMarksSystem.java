@@ -21,7 +21,7 @@ public class StudentsMarksSystem {
             System.out.println(result);
         }
         System.out.println("|---------------------------------------------------------------------------------------------------------------------------------------|");
-
+        editStudentMarks(studentsInformation);
     }
     public static String[] studentsNames(){
         Scanner scanner = new Scanner(System.in);
@@ -97,7 +97,46 @@ public class StudentsMarksSystem {
 
         return studentsInformation;
     }
-    public static void editStudentMarks(){
+    public static void editStudentMarks(ArrayList<String> studentsInformation){
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Which student do you want to edit his marks: ");
+        int studentId = scanner.nextInt();
+        if (studentId > studentsInformation.size()){
+            System.out.println("The student ID is greater than the list and not in the list");
+        }
+        String studentData= studentsInformation.get(studentId);
+        System.out.println(studentData);
+        String formattedStudentData = studentData.replaceAll("[\\[\\]| ]+", "");
+
+        String[] stringFormattedStudentData = formattedStudentData.split(",");
+        int stringSize = stringFormattedStudentData.length;
+        System.out.println(stringSize);
+        for (int i = 0; i < stringFormattedStudentData.length ;i++){
+            if(i==0){
+                System.out.println("Student ID: "+stringFormattedStudentData[i]);
+            }
+            else if(i==1){
+                System.out.println("Student Name is: "+stringFormattedStudentData[i]);
+            }
+            else if(i==2){
+                System.out.println("Student"+stringFormattedStudentData[1]+" scored: "+stringFormattedStudentData[i]+" at ENGLISH");
+            }
+            else if(i==3){
+                System.out.println("Student"+stringFormattedStudentData[1]+" scored: "+stringFormattedStudentData[i]+" at KISWAHILI");
+            }
+            else if(i==4){
+                System.out.println("Student"+stringFormattedStudentData[1]+" scored: "+stringFormattedStudentData[i]+" at MATHS");
+            }
+
+            else if(i==5){
+                System.out.println("Student"+stringFormattedStudentData[1]+" scored: "+stringFormattedStudentData[i]+" at SCIENCE");
+            }
+            else if(i==6){
+                System.out.println("Student"+stringFormattedStudentData[1]+" scored: "+stringFormattedStudentData[i]+" at S/ STUDIES");
+            }
+        }
+        System.out.print("Enter the data which you need to edit (From StudentID to S/ STUDIES ): ");
+        int editStudentDate = scanner.nextInt();
 
     }
 }
