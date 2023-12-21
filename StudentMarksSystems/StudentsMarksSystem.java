@@ -112,10 +112,7 @@ public class StudentsMarksSystem {
         int stringSize = stringFormattedStudentData.length;
         System.out.println(stringSize);
         for (int i = 0; i < stringFormattedStudentData.length ;i++){
-            if(i==0){
-                System.out.println("Student ID: "+stringFormattedStudentData[i]);
-            }
-            else if(i==1){
+            if(i==1){
                 System.out.println("Student Name is: "+stringFormattedStudentData[i]);
             }
             else if(i==2){
@@ -135,8 +132,77 @@ public class StudentsMarksSystem {
                 System.out.println("Student"+stringFormattedStudentData[1]+" scored: "+stringFormattedStudentData[i]+" at S/ STUDIES");
             }
         }
-        System.out.print("Enter the data which you need to edit (From StudentID to S/ STUDIES ): ");
-        int editStudentDate = scanner.nextInt();
+        System.out.print("Enter the data which you need to edit (From StudentName to S/ STUDIES )1-6: ");
+        int editStudentData = scanner.nextInt();
+        scanner.nextLine();
+        int updatedTotal = 0;
+
+//        String stringFormattedStudentDatum="";
+        for (int i = 0; i < stringFormattedStudentData.length ;i++) {
+            System.out.print("Enter the updated Details: ");
+            if (editStudentData == 1){
+                String editStudent = scanner.nextLine();
+                String studentName=stringFormattedStudentData[1];
+                studentName=editStudent;
+                stringFormattedStudentData[1] = studentName;
+                break;
+            }
+            if (editStudentData == 2){
+                String editStudentMarkEnglish = scanner.nextLine();
+                String updatedStudentEnglishMark=stringFormattedStudentData[1];
+                updatedStudentEnglishMark=editStudentMarkEnglish;
+                stringFormattedStudentData[2] = String.valueOf(updatedStudentEnglishMark);
+                updatedTotal = Integer.parseInt(stringFormattedStudentData[2]) + Integer.parseInt(stringFormattedStudentData[3])+Integer.parseInt(stringFormattedStudentData[4])+Integer.parseInt(stringFormattedStudentData[5]+stringFormattedStudentData[6]);
+
+                break;
+
+            }
+            if (editStudentData == 3){
+                String editStudentMarkEnglish = scanner.nextLine();
+                String updatedStudentKiswahiliMark=stringFormattedStudentData[1];
+                updatedStudentKiswahiliMark=editStudentMarkEnglish;
+                stringFormattedStudentData[3] = String.valueOf(updatedStudentKiswahiliMark);
+                updatedTotal = Integer.parseInt((stringFormattedStudentData[2]) + Integer.parseInt(stringFormattedStudentData[3])+Integer.parseInt(stringFormattedStudentData[4])+Integer.parseInt(stringFormattedStudentData[5])+Integer.parseInt(stringFormattedStudentData[6]));
+
+                break;
+            }
+            if (editStudentData == 4){
+                String editStudentMarkEnglish = scanner.nextLine();
+                String updatedStudentMathMark=stringFormattedStudentData[1];
+                updatedStudentMathMark=editStudentMarkEnglish;
+                stringFormattedStudentData[4] = String.valueOf(updatedStudentMathMark);
+                updatedTotal = Integer.parseInt(stringFormattedStudentData[2]) + Integer.parseInt(stringFormattedStudentData[3])+Integer.parseInt(stringFormattedStudentData[4])+Integer.parseInt(stringFormattedStudentData[5]+stringFormattedStudentData[6]);
+
+            }
+            if (editStudentData == 5){
+                String editStudentMarkEnglish = scanner.nextLine();
+                String updatedStudentScienceMark=stringFormattedStudentData[1];
+                updatedStudentScienceMark=editStudentMarkEnglish;
+                stringFormattedStudentData[5] = String.valueOf(updatedStudentScienceMark);
+                updatedTotal = Integer.parseInt(stringFormattedStudentData[2]) + Integer.parseInt(stringFormattedStudentData[3])+Integer.parseInt(stringFormattedStudentData[4])+Integer.parseInt(stringFormattedStudentData[5]+stringFormattedStudentData[6]);
+
+                break;
+
+            }
+            if (editStudentData == 6){
+                String editStudentMarkEnglish = scanner.nextLine();
+                String updatedStudentSStudiesMark=stringFormattedStudentData[1];
+                updatedStudentSStudiesMark=editStudentMarkEnglish;
+                stringFormattedStudentData[6] = String.valueOf(updatedStudentSStudiesMark);
+                updatedTotal = Integer.parseInt(stringFormattedStudentData[2]) + Integer.parseInt(stringFormattedStudentData[3])+Integer.parseInt(stringFormattedStudentData[4])+Integer.parseInt(stringFormattedStudentData[5]+stringFormattedStudentData[6]);
+
+                break;
+
+            }
+//            int updatedTotal;
+            double updatedAverage;
+
+        }
+        System.out.println(Arrays.toString(stringFormattedStudentData));
+        System.out.println(stringFormattedStudentData[7]);
+        System.out.println("Updated Total : "+updatedTotal);
+
+
 
     }
 }
