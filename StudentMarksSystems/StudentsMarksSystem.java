@@ -10,6 +10,7 @@ import java.util.Scanner;
 //calculate the average
 //Give excellent, good, fair fail according to student average
 //give class average
+
 public class StudentsMarksSystem {
     public static void main(String[] args){
         ArrayList<String> studentsInformation = giveEachStudentMarks();
@@ -30,12 +31,12 @@ public class StudentsMarksSystem {
         // Consume the newline character
         scanner.nextLine();
         String[] studentNamesArray = new String[numberOfStudents];
-        String studentName= "";
+//        String studentName= "";
         for (int i = 0; i< numberOfStudents;i++){
             System.out.print("Enter the student name "+(i+1)+": ");
             studentNamesArray[i] = scanner.nextLine();
         }
-//        System.out.println(Arrays.toString(studentNamesArray));
+
         return studentNamesArray;
     }
     public static String [] studentSubjects(){
@@ -68,33 +69,13 @@ public class StudentsMarksSystem {
 
             }
             studentAverageMarks = (double) studentTotalMarks / studentSubjects.length;
-            String studentPerformance = "";
-            if(studentAverageMarks >= 70) {
-                studentPerformance ="Excellent";
-            }
-            else if (studentAverageMarks >= 60){
-                studentPerformance ="Very Good";
 
-            }
-            else if (studentAverageMarks >= 50){
-                studentPerformance ="Average  ";
-
-            }
-            else if (studentAverageMarks >= 40){
-                studentPerformance ="Pass     ";
-
-            }
-            else {
-                studentPerformance ="Fail     ";
-
-            }
             studentSubjectsMarks.add("||        "+studentTotalMarks+"       ||");
             studentSubjectsMarks.add("       "+studentAverageMarks+"    ||");
-            studentSubjectsMarks.add(studentPerformance+"       |");
+            studentSubjectsMarks.add(studentPerformance(studentAverageMarks)+"       |");
 
             studentsInformation.add(""+studentSubjectsMarks);
         }
-
         return studentsInformation;
     }
     public static void editStudentMarks(ArrayList<String> studentsInformation){
@@ -132,77 +113,68 @@ public class StudentsMarksSystem {
                 System.out.println("Student"+stringFormattedStudentData[1]+" scored: "+stringFormattedStudentData[i]+" at S/ STUDIES");
             }
         }
+
         System.out.print("Enter the data which you need to edit (From StudentName to S/ STUDIES )1-6: ");
         int editStudentData = scanner.nextInt();
         scanner.nextLine();
         int updatedTotal = 0;
+        double updatedAverage =0;
 
-//        String stringFormattedStudentDatum="";
-        for (int i = 0; i < stringFormattedStudentData.length ;i++) {
-            System.out.print("Enter the updated Details: ");
-            if (editStudentData == 1){
+
+        if (editStudentData == 1){
+                System.out.print("Enter the updated Details: ");
                 String editStudent = scanner.nextLine();
-                String studentName=stringFormattedStudentData[1];
+                String studentName;
                 studentName=editStudent;
                 stringFormattedStudentData[1] = studentName;
-                break;
-            }
-            if (editStudentData == 2){
-                String editStudentMarkEnglish = scanner.nextLine();
-                String updatedStudentEnglishMark=stringFormattedStudentData[1];
-                updatedStudentEnglishMark=editStudentMarkEnglish;
-                stringFormattedStudentData[2] = String.valueOf(updatedStudentEnglishMark);
-                updatedTotal = Integer.parseInt(stringFormattedStudentData[2]) + Integer.parseInt(stringFormattedStudentData[3])+Integer.parseInt(stringFormattedStudentData[4])+Integer.parseInt(stringFormattedStudentData[5]+stringFormattedStudentData[6]);
-
-                break;
-
-            }
-            if (editStudentData == 3){
-                String editStudentMarkEnglish = scanner.nextLine();
-                String updatedStudentKiswahiliMark=stringFormattedStudentData[1];
-                updatedStudentKiswahiliMark=editStudentMarkEnglish;
-                stringFormattedStudentData[3] = String.valueOf(updatedStudentKiswahiliMark);
-                updatedTotal = Integer.parseInt((stringFormattedStudentData[2]) + Integer.parseInt(stringFormattedStudentData[3])+Integer.parseInt(stringFormattedStudentData[4])+Integer.parseInt(stringFormattedStudentData[5])+Integer.parseInt(stringFormattedStudentData[6]));
-
-                break;
-            }
-            if (editStudentData == 4){
-                String editStudentMarkEnglish = scanner.nextLine();
-                String updatedStudentMathMark=stringFormattedStudentData[1];
-                updatedStudentMathMark=editStudentMarkEnglish;
-                stringFormattedStudentData[4] = String.valueOf(updatedStudentMathMark);
-                updatedTotal = Integer.parseInt(stringFormattedStudentData[2]) + Integer.parseInt(stringFormattedStudentData[3])+Integer.parseInt(stringFormattedStudentData[4])+Integer.parseInt(stringFormattedStudentData[5]+stringFormattedStudentData[6]);
-
-            }
-            if (editStudentData == 5){
-                String editStudentMarkEnglish = scanner.nextLine();
-                String updatedStudentScienceMark=stringFormattedStudentData[1];
-                updatedStudentScienceMark=editStudentMarkEnglish;
-                stringFormattedStudentData[5] = String.valueOf(updatedStudentScienceMark);
-                updatedTotal = Integer.parseInt(stringFormattedStudentData[2]) + Integer.parseInt(stringFormattedStudentData[3])+Integer.parseInt(stringFormattedStudentData[4])+Integer.parseInt(stringFormattedStudentData[5]+stringFormattedStudentData[6]);
-
-                break;
-
-            }
-            if (editStudentData == 6){
-                String editStudentMarkEnglish = scanner.nextLine();
-                String updatedStudentSStudiesMark=stringFormattedStudentData[1];
-                updatedStudentSStudiesMark=editStudentMarkEnglish;
-                stringFormattedStudentData[6] = String.valueOf(updatedStudentSStudiesMark);
-                updatedTotal = Integer.parseInt(stringFormattedStudentData[2]) + Integer.parseInt(stringFormattedStudentData[3])+Integer.parseInt(stringFormattedStudentData[4])+Integer.parseInt(stringFormattedStudentData[5]+stringFormattedStudentData[6]);
-
-                break;
-
-            }
-//            int updatedTotal;
-            double updatedAverage;
 
         }
+        else {
+            for (int i = 3; i < stringFormattedStudentData.length ;i++) {
+                if (editStudentData == i){
+                    System.out.print("Enter the updated Details: ");
+                    String editStudentMark = scanner.nextLine();
+                    String updatedStudentMark;
+                    updatedStudentMark=editStudentMark;
+                    stringFormattedStudentData[i] = updatedStudentMark;
+                    updatedTotal = Integer.parseInt(stringFormattedStudentData[2]) + Integer.parseInt(stringFormattedStudentData[3])+Integer.parseInt(stringFormattedStudentData[4])+Integer.parseInt(stringFormattedStudentData[5])+Integer.parseInt(stringFormattedStudentData[6]);
+                    stringFormattedStudentData[7] = String.valueOf(updatedTotal);
+                    updatedAverage = (double) updatedTotal / 5;
+
+                    stringFormattedStudentData[8] = String.valueOf(updatedAverage);
+                    stringFormattedStudentData[9] = studentPerformance(updatedAverage);
+                    break;
+                }
+            }
+        }
+
         System.out.println(Arrays.toString(stringFormattedStudentData));
         System.out.println(stringFormattedStudentData[7]);
         System.out.println("Updated Total : "+updatedTotal);
 
+    }
 
+    private static String studentPerformance(double averageMark){
+        String studentPerformance;
+        if(averageMark >= 70) {
+            studentPerformance ="Excellent";
+        }
+        else if (averageMark >= 60){
+            studentPerformance ="Very Good";
 
+        }
+        else if (averageMark >= 50){
+            studentPerformance ="Average  ";
+
+        }
+        else if (averageMark >= 40){
+            studentPerformance ="Pass     ";
+
+        }
+        else {
+            studentPerformance ="Fail     ";
+
+        }
+        return studentPerformance;
     }
 }
