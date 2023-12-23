@@ -14,6 +14,11 @@ import java.util.Scanner;
 public class StudentsMarksSystem {
     public static void main(String[] args){
         ArrayList<String> studentsInformation = giveEachStudentMarks();
+        printStudentsInformation(studentsInformation);
+        ArrayList<String> editedStudentsMarks = editStudentMarks(studentsInformation);
+        printStudentsInformation(editedStudentsMarks);
+    }
+    public static void printStudentsInformation(ArrayList<String> studentsInformation){
         System.out.println("|---------------------------------------------------------------------------------------------------------------------------------------|");
         System.out.println("| STDID || STD NAME || ENGLISH  || KISWAHILI || MATHS  || SCIENCE || S/ STUDIES || STD TOTAL MARKS || STD AVG MARKS  || STD PERFORMANCE | " );
         System.out.println("|---------------------------------------------------------------------------------------------------------------------------------------|");
@@ -22,7 +27,6 @@ public class StudentsMarksSystem {
             System.out.println(result);
         }
         System.out.println("|---------------------------------------------------------------------------------------------------------------------------------------|");
-        editStudentMarks(studentsInformation);
     }
     public static String[] studentsNames(){
         Scanner scanner = new Scanner(System.in);
@@ -78,20 +82,21 @@ public class StudentsMarksSystem {
         }
         return studentsInformation;
     }
-    public static void editStudentMarks(ArrayList<String> studentsInformation){
+    public static ArrayList<String> editStudentMarks(ArrayList<String> studentsInformation){
         Scanner scanner = new Scanner(System.in);
         System.out.print("Which student do you want to edit his marks: ");
         int studentId = scanner.nextInt();
+        int studentDropedData = studentId;
         if (studentId > studentsInformation.size()){
             System.out.println("The student ID is greater than the list and not in the list");
         }
         String studentData= studentsInformation.get(studentId);
-        System.out.println(studentData);
+//        System.out.println(studentData);
         String formattedStudentData = studentData.replaceAll("[\\[\\]| ]+", "");
 
         String[] stringFormattedStudentData = formattedStudentData.split(",");
-        int stringSize = stringFormattedStudentData.length;
-        System.out.println(stringSize);
+//        int stringSize = stringFormattedStudentData.length;
+//        System.out.println(stringSize);
         for (int i = 0; i < stringFormattedStudentData.length ;i++){
             if(i==1){
                 System.out.println("Student Name is: "+stringFormattedStudentData[i]);
@@ -147,10 +152,9 @@ public class StudentsMarksSystem {
                 }
             }
         }
-
-        System.out.println(Arrays.toString(stringFormattedStudentData));
-        System.out.println(stringFormattedStudentData[7]);
-        System.out.println("Updated Total : "+updatedTotal);
+        studentsInformation.remove(studentDropedData);
+        studentsInformation.add("|       "+stringFormattedStudentData[0]+" |   "+stringFormattedStudentData[1]+"    || "+stringFormattedStudentData[2] +"       || "+stringFormattedStudentData[3]+"       || "+stringFormattedStudentData[4]+"       || "+stringFormattedStudentData[5]+"       || "+stringFormattedStudentData[6]+"       ||         "+stringFormattedStudentData[7]+"      ||         "+stringFormattedStudentData[8]+"   || "+stringFormattedStudentData[9] +"       |");
+        return studentsInformation;
 
     }
 
