@@ -1,6 +1,7 @@
 package BookManagementSystem;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -17,13 +18,13 @@ It will be able to:
  */
 public class BookManagementSystem {
     public static void main(String[] args){
-        addBooksInLibrary();
+        issueBooksInLibrary();
 
     }
     public static void showBooksInLibrary(){
 
     }
-    public static void addBooksInLibrary(){
+    public static ArrayList<String> addBooksInLibrary(){
         Scanner scanner = new Scanner(System.in);
         String bookNameTitle;
         String bookAuthor;
@@ -34,6 +35,7 @@ public class BookManagementSystem {
         int numberOfBooks = scanner.nextInt();
         scanner.nextLine();
         int i =0;
+        int bookID = 0;
         while (i < numberOfBooks){
             System.out.print("Enter the book title name of book "+(i+1)+": ");
             bookNameTitle = scanner.nextLine();
@@ -43,14 +45,32 @@ public class BookManagementSystem {
             bookPages= scanner.nextInt();
             System.out.print("Enter the year of publication: ");
             bookYearOfPublication = scanner.nextInt();
-            addBooksToLibrary.add(bookNameTitle+" "+bookAuthor+" "+bookPages+" "+bookYearOfPublication);
+            bookID=bookID+1;
+            addBooksToLibrary.add("|     "+bookID+"  ||  "+bookNameTitle+"        ||    "+bookAuthor+"   ||   "+bookPages+"    ||         "+bookYearOfPublication+"        |");
             i++;
             scanner.nextLine();
         }
-        System.out.print(addBooksToLibrary);
+
+        return  addBooksToLibrary;
 
     }
     public static void issueBooksInLibrary(){
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<String> booksInLibrary = addBooksInLibrary();
+        System.out.println("|---------------------------------------------------------------------|");
+        System.out.println("|BOOK ID  || BOOK NAME || AUTHOR  ||   PAGES   || YEAR OF PUBLICATION |");
+        System.out.println("|---------------------------------------------------------------------|");
+
+        for (String bookInLibrary: booksInLibrary ){
+            System.out.println(bookInLibrary);
+        }
+        System.out.println("|---------------------------------------------------------------------|");
+
+        System.out.print("Enter the book ID you want to issue? ");
+        int bookIdToIssue=scanner.nextInt();
+        String[] bookToIssue = new String[]{booksInLibrary.get(bookIdToIssue-1)};
+        System.out.println(Arrays.toString(bookToIssue));
+
 
     }
     public static void returnBooksInLibrary(){
