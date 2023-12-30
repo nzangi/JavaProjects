@@ -2,6 +2,7 @@ package BookManagementSystem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Scanner;
 
 /*
@@ -18,7 +19,7 @@ It will be able to:
  */
 public class BookManagementSystem {
     public static void main(String[] args){
-        issueBooksInLibrary();
+        returnBooksInLibrary();
 
     }
     public static void showBooksInLibrary(){
@@ -54,7 +55,7 @@ public class BookManagementSystem {
         return  addBooksToLibrary;
 
     }
-    public static void issueBooksInLibrary(){
+    public static String[] issueBooksInLibrary(){
         Scanner scanner = new Scanner(System.in);
         ArrayList<String> booksInLibrary = addBooksInLibrary();
         System.out.println("|---------------------------------------------------------------------|");
@@ -68,12 +69,42 @@ public class BookManagementSystem {
 
         System.out.print("Enter the book ID you want to issue? ");
         int bookIdToIssue=scanner.nextInt();
-        String[] bookToIssue = new String[]{booksInLibrary.get(bookIdToIssue-1)};
-        System.out.println(Arrays.toString(bookToIssue));
+        scanner.nextLine();
+        System.out.print("Enter the student ADM No to issue the book: ");
+        String studentAdmnNo = scanner.nextLine();
+        String bookToIssue = booksInLibrary.get(bookIdToIssue-1);
+        String formattedBookToIssued = bookToIssue.replaceAll("[\\[\\]| ]+", ",");
 
+        String[] formattedBookToIssuedArray = formattedBookToIssued.split(",");
+        System.out.println();
+        for (int i=0;i<formattedBookToIssuedArray.length;i++ ){
+            System.out.println("You have issue book "+formattedBookToIssuedArray[2]+" to student Admission number "+studentAdmnNo);
+            break;
+
+        }
+
+        String[] studentDataIssuedBook = {studentAdmnNo,formattedBookToIssuedArray[2]};
+        return studentDataIssuedBook;
 
     }
     public static void returnBooksInLibrary(){
+        Scanner scanner = new Scanner(System.in);
+        String[] issuedBook = issueBooksInLibrary();
+        System.out.println(Arrays.toString(issuedBook));
+
+        System.out.print("Enter the name of the book which has been returned: ");
+        String bookName = scanner.nextLine();
+        System.out.print("Enter the Student Admission : ");
+        String studentAdmnNo = scanner.nextLine();
+
+        if (Objects.equals(studentAdmnNo, issuedBook[0]) && Objects.equals(bookName, issuedBook[1])){
+            System.out.println("The book is successfully returned to library!");
+        }
+        else {
+            System.out.println("Incorrect return details!");
+        }
+
+
 
     }
     public static void updateBooksInLibrary(){
