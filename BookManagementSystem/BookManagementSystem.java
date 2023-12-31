@@ -19,7 +19,7 @@ It will be able to:
  */
 public class BookManagementSystem {
     public static void main(String[] args){
-        returnBooksInLibrary();
+        updateBooksInLibrary();
 
     }
     public static void showBooksInLibrary(){
@@ -55,9 +55,7 @@ public class BookManagementSystem {
         return  addBooksToLibrary;
 
     }
-    public static String[] issueBooksInLibrary(){
-        Scanner scanner = new Scanner(System.in);
-        ArrayList<String> booksInLibrary = addBooksInLibrary();
+    public static void printBooksInLibrary(ArrayList<String> booksInLibrary){
         System.out.println("|---------------------------------------------------------------------|");
         System.out.println("|BOOK ID  || BOOK NAME || AUTHOR  ||   PAGES   || YEAR OF PUBLICATION |");
         System.out.println("|---------------------------------------------------------------------|");
@@ -66,6 +64,12 @@ public class BookManagementSystem {
             System.out.println(bookInLibrary);
         }
         System.out.println("|---------------------------------------------------------------------|");
+    }
+    public static String[] issueBooksInLibrary(){
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<String> booksInLibrary = addBooksInLibrary();
+        printBooksInLibrary(booksInLibrary);
+
 
         System.out.print("Enter the book ID you want to issue? ");
         int bookIdToIssue=scanner.nextInt();
@@ -108,6 +112,14 @@ public class BookManagementSystem {
 
     }
     public static void updateBooksInLibrary(){
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<String> booksInLibrary = addBooksInLibrary();
+        System.out.println("|---------------------------------------------------------------------|");
+        System.out.println("Books in library to update");
+        System.out.println("|---------------------------------------------------------------------|");
+        printBooksInLibrary(booksInLibrary);
+        System.out.println("Enter the ");
+
 
     }
     public static void removeBooksInLibrary(){
