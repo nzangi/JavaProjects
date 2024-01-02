@@ -19,11 +19,31 @@ It will be able to:
  */
 public class BookManagementSystem {
     public static void main(String[] args){
-        updateBooksInLibrary();
-
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("""
+                What do want to do in library:
+                1 To show books in store
+                2 Issue books in store
+                3 Return book to library
+                4 Update books in store
+                5 Remove book in library\s""");
+        int choice = scanner.nextInt();
+        if (choice==1){
+            showBooksInLibrary();
+        } else if (choice==2) {
+            issueBooksInLibrary();
+        } else if (choice==3) {
+            returnBooksInLibrary();
+        } else if (choice==4) {
+            updateBooksInLibrary();
+        }
+        else {
+            removeBooksInLibrary();
+        }
     }
     public static void showBooksInLibrary(){
-
+        ArrayList<String> booksInLibrary = addBooksInLibrary();
+        printBooksInLibrary(booksInLibrary);
     }
     public static ArrayList<String> addBooksInLibrary(){
         Scanner scanner = new Scanner(System.in);
@@ -118,11 +138,41 @@ public class BookManagementSystem {
         System.out.println("Books in library to update");
         System.out.println("|---------------------------------------------------------------------|");
         printBooksInLibrary(booksInLibrary);
-        System.out.println("Enter the ");
+        System.out.print("Enter the book ID to edit: ");
+        int bookId = scanner.nextInt();
+        String bookToUpdate = booksInLibrary.get(bookId-1);
+        String formattedBookToUpdate = bookToUpdate.replaceAll("[\\[\\]| ]+", ",");
+        String[] formattedBookToUpdateArray = formattedBookToUpdate.split(",");
+        for (int i =0;i<formattedBookToUpdateArray.length;i++){
+            System.out.println("(2) Book Title is : "+formattedBookToUpdateArray[2]);
+            System.out.println("(3) Book Author  is : "+formattedBookToUpdateArray[3]);
+            System.out.println("(4) Total book pages are :"+formattedBookToUpdateArray[4]);
+            System.out.println("(5) Book Year of publication is :"+formattedBookToUpdateArray[5]);
+        }
+        System.out.print("Enter the book Item to update from (2-5) to edit: ");
+        int bookItemToUpdate = scanner.nextInt();
+        scanner.nextLine();
+        for (int i =2;i <formattedBookToUpdateArray.length;i++){
+            System.out.print("Update your value selected of "+bookItemToUpdate+" : ");
+            String bookValueToUpdate = scanner.nextLine();
+            formattedBookToUpdateArray[i] = bookValueToUpdate;
+            break;
+        }
+        booksInLibrary.remove(bookId-1);
+        booksInLibrary.add("|     "+formattedBookToUpdateArray[1]+"  ||  "+formattedBookToUpdateArray[2]+"        ||    "+formattedBookToUpdateArray[3]+"   ||   "+formattedBookToUpdateArray[4]+"    ||         "+formattedBookToUpdateArray[5]+"        |");
 
+        printBooksInLibrary(booksInLibrary);
 
     }
     public static void removeBooksInLibrary(){
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<String> booksInLibrary = addBooksInLibrary();
+        printBooksInLibrary(booksInLibrary);
+        System.out.print("Enter the book to remove from the library: ");
+        int bookToRemove = scanner.nextInt();
+        booksInLibrary.remove(bookToRemove);
+        System.out.println("You have successfully removed the book from library.");
+        printBooksInLibrary(booksInLibrary);
 
     }
 }
