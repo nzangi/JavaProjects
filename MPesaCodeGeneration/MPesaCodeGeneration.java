@@ -1,14 +1,24 @@
 package MPesaCodeGeneration;
 
-import java.util.Arrays;
-import java.util.Formattable;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /*
 SA30ZVUWF2 Confirmed.You have received Ksh1.64
 from M-PESA GlobalPay 903470 on 3/1/24 at 9:04 PM
  */
+
+/*
+Sent Money Message
+SA61927XIR Confirmed. Ksh150.00 sent to DYMPHINA  ONGWAE +254703554046 on 6/1/24 at 1:55 PM. New M-PESA balance is Ksh184.39.
+Transaction cost, Ksh7.00. Amount you can transact within the day is 487,590.00. To reverse, foward this message to 456
+ */
+/*
+Receive Money Message
+SA61927XIR Confirmed. Ksh150.00 sent to DYMPHINA  ONGWAE +254703554046 on 6/1/24 at 1:55 PM. New M-PESA balance is Ksh184.39.
+Transaction cost, Ksh7.00. Amount you can transact within the day is 487,590.00. To reverse, foward this message to 456
+ */
+
 public class MPesaCodeGeneration {
     public static void main(String[] args){
         generateMpesaCode();
@@ -41,6 +51,7 @@ public class MPesaCodeGeneration {
     }
     private static int[] checkMonth(){
         Scanner scanner  = new Scanner(System.in);
+        System.out.println("Enter the amount to transferred: ");
         System.out.print("Enter the to check if it is leap: ");
         int year = scanner.nextInt();
         System.out.print("Enter the month of year "+year+"(1-12) : ");
@@ -66,14 +77,29 @@ public class MPesaCodeGeneration {
 
     }
     private static void generateMpesaCode(){
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat ("dd/MM/yyyy hh:mm:ss a");
         int [] dataForYear = checkMonth();
-        System.out.println(Arrays.toString(dataForYear));
-        int firstYearForCodeGeneration = 2006;
+        int firstYearForCodeGeneration = 2005;
         String mpesaCode = "";
         if(dataForYear[0] < firstYearForCodeGeneration){
             System.out.println("By this year, the system was not working. enter a value after 2006");
         }
+        int getYearDifference = dataForYear[0] - firstYearForCodeGeneration;
+        if (getYearDifference > 26){
+            getYearDifference = getYearDifference % 26;
+        }
+        HashMap<Integer, String> mpesaCodes = getYearMpesaCodesHashMap();
+        HashMap<Integer, String> mpesaMonthCodes = getMonthMpesaCodesHashMap();
+        String mpesaYearCode = mpesaCodes.get(getYearDifference);
+        String mpesaMonthCode= mpesaMonthCodes.get(dataForYear[1]);
+        mpesaCode = mpesaYearCode+mpesaMonthCode+dataForYear[2];
+        System.out.println(mpesaCode+" Confirmed.You have received Ksh1.64\n" +
+                "from M-PESA GlobalPay 903470 on "+formatter.format(date));
 
+    }
+
+    private static HashMap<Integer, String> getYearMpesaCodesHashMap() {
         HashMap<Integer,String> mpesaCodes = new HashMap<>();
         mpesaCodes.put(1,"A");
         mpesaCodes.put(2,"B");
@@ -101,16 +127,26 @@ public class MPesaCodeGeneration {
         mpesaCodes.put(24,"X");
         mpesaCodes.put(25,"Y");
         mpesaCodes.put(26,"Z");
-        String firstMpesaCode = mpesaCodes.get(1);
-        if (dataForYear[0]== firstYearForCodeGeneration){
-            mpesaCode = firstMpesaCode;
-            System.out.println(mpesaCode);
-        }
-//        for (int i =1;i<27;i++){
-//            mpesaCode = mpesaCodes.get()
-//        }
-
+        return mpesaCodes;
     }
+
+    private static HashMap<Integer, String> getMonthMpesaCodesHashMap() {
+        HashMap<Integer,String> mpesaMonthCodes = new HashMap<>();
+        mpesaMonthCodes.put(1,"A");
+        mpesaMonthCodes.put(2,"B");
+        mpesaMonthCodes.put(3,"C");
+        mpesaMonthCodes.put(4,"D");
+        mpesaMonthCodes.put(5,"E");
+        mpesaMonthCodes.put(6,"F");
+        mpesaMonthCodes.put(7,"G");
+        mpesaMonthCodes.put(8,"H");
+        mpesaMonthCodes.put(9,"I");
+        mpesaMonthCodes.put(10,"J");
+        mpesaMonthCodes.put(11,"K");
+        mpesaMonthCodes.put(12,"L");
+        return mpesaMonthCodes;
+    }
+
     private static HashMap<Integer,Integer> getDaysOfMonthHashMap(int returnLeapYear){
         HashMap <Integer,Integer> monthDays = new HashMap<>();
         if (returnLeapYear == 1){
