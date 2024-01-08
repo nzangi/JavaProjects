@@ -3,21 +3,6 @@ package MPesaCodeGeneration;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-/*
-SA30ZVUWF2 Confirmed.You have received Ksh1.64
-from M-PESA GlobalPay 903470 on 3/1/24 at 9:04 PM
- */
-
-/*
-Sent Money Message
-SA61927XIR Confirmed. Ksh150.00 sent to DYMPHINA  ONGWAE +254703554046 on 6/1/24 at 1:55 PM. New M-PESA balance is Ksh184.39.
-Transaction cost, Ksh7.00. Amount you can transact within the day is 487,590.00. To reverse, foward this message to 456
- */
-/*
-Receive Money Message
-SA61927XIR Confirmed. Ksh150.00 sent to DYMPHINA  ONGWAE +254703554046 on 6/1/24 at 1:55 PM. New M-PESA balance is Ksh184.39.
-Transaction cost, Ksh7.00. Amount you can transact within the day is 487,590.00. To reverse, foward this message to 456
- */
 
 public class MPesaCodeGeneration {
     public static void main(String[] args){
@@ -93,11 +78,83 @@ public class MPesaCodeGeneration {
         HashMap<Integer, String> mpesaMonthCodes = getMonthMpesaCodesHashMap();
         String mpesaYearCode = mpesaCodes.get(getYearDifference);
         String mpesaMonthCode= mpesaMonthCodes.get(dataForYear[1]);
-        mpesaCode = mpesaYearCode+mpesaMonthCode+dataForYear[2];
-        System.out.println(mpesaCode+" Confirmed.You have received Ksh1.64\n" +
-                "from M-PESA GlobalPay 903470 on "+formatter.format(date));
+        mpesaCode = mpesaYearCode+mpesaMonthCode+dataForYear[2]+getLast8MpesaCodes();
+        int [] sendMoneyDetails = getAmountTransferredAndReceived();
+        String senderName = "DYMPHINA  ONGWAE";
+        String senderNumber = "+254711111111";
+        String reciverName = "JOHN MUOKI";
+        String receiverNumber = "0722222222";
+        System.out.println("Sender Message");
+        System.out.println("=================");
+
+        System.out.println(mpesaCode+" Confirmed. "+sendMoneyDetails[1]+" sent to "+reciverName+" "+receiverNumber+" on "+formatter.format(date)+". New M-PESA balance is "+sendMoneyDetails[0]+"\n" +
+                "Transaction cost, Ksh7.00. Amount you can transact within the day is 487,590.00. To reverse, foward this message to 456 ");
+
+        System.out.println("Receiver Message");
+        System.out.println("=================");
+
+        System.out.println(mpesaCode+" Confirmed.You have received Ksh"+sendMoneyDetails[1]+ " from "+senderName+" "+senderNumber+" on "+formatter.format(date)+"  New M-PESA balance is Ksh"+sendMoneyDetails[2]+". Register for lipa \n" +
+                "na M-PESA till for free today. Click https://m-pesaforbusiness.co.ke/LNM/ ");
 
     }
+    private static int[] getAmountTransferredAndReceived(){
+        Scanner scanner = new Scanner(System.in);
+        int amountToSend,senderBalance,balanceAfterSend,receiverAmount,receiverBalance;
+        System.out.print("Enter the sender current account balance (KSH): ");
+        senderBalance = scanner.nextInt();
+        System.out.print("Enter the amount to send (KSH): ");
+        amountToSend = scanner.nextInt();
+        System.out.print("Enter the receiver current account balance (KSH): ");
+        receiverBalance = scanner.nextInt();
+        int[] sendMoneyDetails =new int[4];
+
+        if (senderBalance > amountToSend){
+            balanceAfterSend = senderBalance-amountToSend;
+            receiverAmount = amountToSend + receiverBalance;
+            sendMoneyDetails = new int[]{balanceAfterSend, amountToSend,receiverAmount,receiverBalance};
+
+
+        }
+        else {
+            System.out.println("You don't have funds to transfer "+amountToSend+". Your balance is "+senderBalance+" .");
+        }
+        return sendMoneyDetails;
+    }
+
+    private static String getLast8MpesaCodes(){
+        HashMap<Integer,String> mpesaCodes = new HashMap<>();
+        mpesaCodes.put(1,"A");
+        mpesaCodes.put(2,"B");
+        mpesaCodes.put(3,"C");
+        mpesaCodes.put(4,"D");
+        mpesaCodes.put(5,"E");
+        mpesaCodes.put(6,"F");
+        mpesaCodes.put(7,"G");
+        mpesaCodes.put(8,"H");
+        mpesaCodes.put(9,"I");
+        mpesaCodes.put(10,"J");
+        mpesaCodes.put(11,"K");
+        mpesaCodes.put(12,"L");
+        mpesaCodes.put(13,"M");
+        mpesaCodes.put(14,"N");
+        mpesaCodes.put(15,"O");
+        mpesaCodes.put(16,"P");
+        mpesaCodes.put(17,"Q");
+        mpesaCodes.put(18,"R");
+        mpesaCodes.put(19,"S");
+        mpesaCodes.put(20,"T");
+        mpesaCodes.put(21,"U");
+        mpesaCodes.put(22,"V");
+        mpesaCodes.put(23,"W");
+        mpesaCodes.put(24,"X");
+        mpesaCodes.put(25,"Y");
+        mpesaCodes.put(26,"Z");
+        String[] firstMpesaCode = {"A","A","A","A","A","A","A","A"};
+        String mpesaCode = String.join("",firstMpesaCode);
+        return mpesaCode;
+
+    }
+
 
     private static HashMap<Integer, String> getYearMpesaCodesHashMap() {
         HashMap<Integer,String> mpesaCodes = new HashMap<>();
