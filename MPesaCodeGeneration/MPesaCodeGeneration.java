@@ -5,10 +5,28 @@ import java.util.*;
 
 
 public class MPesaCodeGeneration {
+    private static int transcationCount = -1;  // Initialize at -1 to start from 0 in the first transaction
     public static void main(String[] args){
+        System.out.println("You are now starting your trancation : ");
         generateMpesaCode();
+        do {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Do you want to do another transaction:\n" +
+                    "PRESS 1 for another function or 1 to cancel: ");
+            int choice  = scanner.nextInt();
+            if (choice==1){
+                generateMpesaCode();
+            }
+            else {
+                System.out.println("You have successfully excited from the program!");
+                break;
+            }
+        }
+        while (true);
+
 
     }
+//    the method calculates if a year is leap or not
     private static int leapYear(int year){
         if ((year % 4)==0){
             if(((year % 100)==0)){
@@ -34,9 +52,9 @@ public class MPesaCodeGeneration {
         }
 
     }
+//    The function if the value of date and month entered by user exists
     private static int[] checkMonth(){
         Scanner scanner  = new Scanner(System.in);
-        System.out.println("Enter the amount to transferred: ");
         System.out.print("Enter the to check if it is leap: ");
         int year = scanner.nextInt();
         System.out.print("Enter the month of year "+year+"(1-12) : ");
@@ -61,6 +79,7 @@ public class MPesaCodeGeneration {
         return dataForYear;
 
     }
+// This is the method which prints all information about the transaction
     private static void generateMpesaCode(){
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat ("dd/MM/yyyy hh:mm:ss a");
@@ -78,6 +97,7 @@ public class MPesaCodeGeneration {
         HashMap<Integer, String> mpesaMonthCodes = getMonthMpesaCodesHashMap();
         String mpesaYearCode = mpesaCodes.get(getYearDifference);
         String mpesaMonthCode= mpesaMonthCodes.get(dataForYear[1]);
+
         mpesaCode = mpesaYearCode+mpesaMonthCode+dataForYear[2]+getLast8MpesaCodes();
         int [] sendMoneyDetails = getAmountTransferredAndReceived();
         String senderName = "DYMPHINA  ONGWAE";
@@ -97,6 +117,8 @@ public class MPesaCodeGeneration {
                 "na M-PESA till for free today. Click https://m-pesaforbusiness.co.ke/LNM/ ");
 
     }
+
+//    The method gives details about the trancation, it also checks if the sender ahs enough funds to carry out the transaction
     private static int[] getAmountTransferredAndReceived(){
         Scanner scanner = new Scanner(System.in);
         int amountToSend,senderBalance,balanceAfterSend,receiverAmount,receiverBalance;
@@ -120,42 +142,22 @@ public class MPesaCodeGeneration {
         }
         return sendMoneyDetails;
     }
-
+//this method show the last digits in a sequential way in each trancation;
     private static String getLast8MpesaCodes(){
         HashMap<Integer,String> mpesaCodes = new HashMap<>();
-        mpesaCodes.put(1,"A");
-        mpesaCodes.put(2,"B");
-        mpesaCodes.put(3,"C");
-        mpesaCodes.put(4,"D");
-        mpesaCodes.put(5,"E");
-        mpesaCodes.put(6,"F");
-        mpesaCodes.put(7,"G");
-        mpesaCodes.put(8,"H");
-        mpesaCodes.put(9,"I");
-        mpesaCodes.put(10,"J");
-        mpesaCodes.put(11,"K");
-        mpesaCodes.put(12,"L");
-        mpesaCodes.put(13,"M");
-        mpesaCodes.put(14,"N");
-        mpesaCodes.put(15,"O");
-        mpesaCodes.put(16,"P");
-        mpesaCodes.put(17,"Q");
-        mpesaCodes.put(18,"R");
-        mpesaCodes.put(19,"S");
-        mpesaCodes.put(20,"T");
-        mpesaCodes.put(21,"U");
-        mpesaCodes.put(22,"V");
-        mpesaCodes.put(23,"W");
-        mpesaCodes.put(24,"X");
-        mpesaCodes.put(25,"Y");
-        mpesaCodes.put(26,"Z");
-        String[] firstMpesaCode = {"A","A","A","A","A","A","A","A"};
-        String mpesaCode = String.join("",firstMpesaCode);
+        for (int i =1;i<=26;i++){
+            mpesaCodes.put(i,String.valueOf((char) (i+64)));
+        }
+        transcationCount++;
+        String[] stringMpesaCodes = new String[8];
+        for (int i =0; i < 8;i++){
+            stringMpesaCodes[i] = mpesaCodes.get((transcationCount+i) % 26 + 1);
+        }
+        String mpesaCode = String.join("",stringMpesaCodes);
         return mpesaCode;
 
     }
-
-
+//the method returns each year with is own Code for year from remember key 1==2005 when mpesa started
     private static HashMap<Integer, String> getYearMpesaCodesHashMap() {
         HashMap<Integer,String> mpesaCodes = new HashMap<>();
         mpesaCodes.put(1,"A");
@@ -186,6 +188,7 @@ public class MPesaCodeGeneration {
         mpesaCodes.put(26,"Z");
         return mpesaCodes;
     }
+//the method returns each month with is own Code for moth january A== December L
 
     private static HashMap<Integer, String> getMonthMpesaCodesHashMap() {
         HashMap<Integer,String> mpesaMonthCodes = new HashMap<>();
@@ -203,7 +206,7 @@ public class MPesaCodeGeneration {
         mpesaMonthCodes.put(12,"L");
         return mpesaMonthCodes;
     }
-
+//the method returns days of each moth and cjecks if a year is leap or not. for leap, the days re 29
     private static HashMap<Integer,Integer> getDaysOfMonthHashMap(int returnLeapYear){
         HashMap <Integer,Integer> monthDays = new HashMap<>();
         if (returnLeapYear == 1){
