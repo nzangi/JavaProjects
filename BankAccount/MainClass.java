@@ -5,10 +5,17 @@ import java.util.Scanner;
 
 public class MainClass {
     public static void main(String[] args){
+        currentAccountData();
+    }
+
+    public static void accountData(){
+
         Scanner scanner = new Scanner(System.in);
+
         System.out.print("Enter the number of Accounts to register: ");
         int numberOfAccounts = scanner.nextInt();
         scanner.nextLine();
+
         ArrayList<Account> accounts = new ArrayList<>();
         for (int i = 0;i < numberOfAccounts;i++){
             System.out.println("Enter the Account for "+(i+1)+" : ");
@@ -51,6 +58,9 @@ public class MainClass {
             }
         }
 
-
+    }
+    public static void currentAccountData(){
+        CurrentAccount currentAccount = new CurrentAccount("1","1",300);
+        System.out.println(currentAccount.getCurrentAccountBalance());
     }
 }
