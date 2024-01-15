@@ -5,19 +5,18 @@ import java.util.Scanner;
 
 public class MainClass {
     public static void main(String[] args){
-        currentAccountData();
+        getCurrentAccountsData();
+
+
     }
-
-    public static void accountData(){
-
+    public static void getCurrentAccountsData(){
         Scanner scanner = new Scanner(System.in);
-
         System.out.print("Enter the number of Accounts to register: ");
-        int numberOfAccounts = scanner.nextInt();
+        int numberOfCurrentAccounts = scanner.nextInt();
         scanner.nextLine();
+        ArrayList<CurrentAccount> currentAccounts = new ArrayList<>();
 
-        ArrayList<Account> accounts = new ArrayList<>();
-        for (int i = 0;i < numberOfAccounts;i++){
+        for (int i = 0;i < numberOfCurrentAccounts;i++){
             System.out.println("Enter the Account for "+(i+1)+" : ");
             System.out.print("Enter Account Holder Number: ");
             String accountHolderNumber = scanner.nextLine();
@@ -28,39 +27,63 @@ public class MainClass {
             System.out.print("Enter Account Holder Telephone Number: ");
             String accountHolderTelephoneNumber = scanner.nextLine();
             System.out.print("Enter Account Holder Account Balance: ");
-            double accountBalance = scanner.nextDouble();
+            double currentAccountBalance = scanner.nextDouble();
             scanner.nextLine();
-            Account account = new Account(accountHolderNumber,accountHolderId,
-                    accountHolderEmailAddress,accountHolderTelephoneNumber,accountBalance);
-            accounts.add(account);
-            account.setAccountHolderEmailAddress("NewSetEmail@GMAIL.COM");
+
+            CurrentAccount currentAccount = new CurrentAccount(accountHolderNumber,accountHolderId,
+                    accountHolderEmailAddress,accountHolderTelephoneNumber,currentAccountBalance);
+            currentAccounts.add(currentAccount);
 
         }
-
+        System.out.println();
         System.out.println("Printing account Details");
         System.out.println("=======================================================");
         System.out.println();
-        for (Account account: accounts){
-            account.displayAccountDetails();
-        }
-        System.out.print("Enter the client account Number which to deposit Money to: ");
-        String accountToDepositMoney = scanner.nextLine();
-        for (Account account: accounts){
-            if (accountToDepositMoney.equals(account.getAccountHolderNumber())){
-                System.out.print("Enter the amount to deposit: ");
-                double amountToDeposit = scanner.nextDouble();
-                account.deposit(amountToDeposit);
-                System.out.println("Deposit of "+amountToDeposit+" was successful");
-                System.out.println("Your current balance is KSH: "+account.getAccountBalance());
-                System.out.println();
-                account.displayAccountDetails();
-                break;
-            }
+
+        for (CurrentAccount currentAccount: currentAccounts){
+            currentAccount.displayAccountDetails();
         }
 
+        System.out.print("Enter the client Account Number which to deposit Money to: ");
+        String accountToDepositMoney = scanner.nextLine();
+
+        for (CurrentAccount currentAccount: currentAccounts){
+            if(accountToDepositMoney.equals(currentAccount.getAccountHolderNumber())){
+                System.out.print("Enter the Amount to Deposit: ");
+                double amountToDeposit = scanner.nextDouble();
+                currentAccount.deposit(amountToDeposit);
+                System.out.println("Your current balance is KSH: "+currentAccount.getCurrentAccountBalance());
+                System.out.println();
+                currentAccount.displayAccountDetails();
+                scanner.nextLine();
+                break;
+            }else {
+                System.out.println("No matching information for Account Number "+accountToDepositMoney+" .");
+            }
+            scanner.close();
+        }
+
+        System.out.print("Enter the client Account Number which to Withdraw Money from: ");
+        String accountToWithdrawMoney = scanner.nextLine();
+
+        for (CurrentAccount currentAccount: currentAccounts){
+            if(accountToWithdrawMoney.equals(currentAccount.getAccountHolderNumber())){
+                System.out.print("Enter the Amount to Withdraw: ");
+                double amountToWithdraw = scanner.nextDouble();
+                currentAccount.withdraw(amountToWithdraw);
+                System.out.println("Your current balance is KSH: "+currentAccount.getCurrentAccountBalance());
+                System.out.println();
+                currentAccount.displayAccountDetails();
+                break;
+            }else {
+                System.out.println("No matching information for Withdrawal Account Number "+accountToDepositMoney);
+            }
+            scanner.close();
+        }
+
+
+
+
     }
-    public static void currentAccountData(){
-        CurrentAccount currentAccount = new CurrentAccount("1","1",300);
-        System.out.println(currentAccount.getCurrentAccountBalance());
-    }
+
 }
