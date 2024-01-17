@@ -3,8 +3,10 @@ package BankAccount;
 import java.util.Date;
 
 public  abstract class Account {
-    private String accountHolderNumber,accountHolderId;
-    private String accountHolderEmailAddress,accountHolderTelephoneNumber;
+    private final String accountHolderNumber;
+    private final String accountHolderId;
+    private final String accountHolderEmailAddress;
+    private final String accountHolderTelephoneNumber;
 //    private double accountBalance;
 
 
@@ -37,7 +39,5 @@ public  abstract class Account {
         return accountHolderTelephoneNumber;
     }
 
-//    public double getAccountBalance() {
-//        return accountBalance;
-//    }
+
 }
