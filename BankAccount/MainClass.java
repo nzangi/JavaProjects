@@ -6,21 +6,25 @@ import java.util.Scanner;
 public class MainClass {
     public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
+
         while (true){
+//            getCurrentAccountsData();
             System.out.print("Enter the type of account you want to create.\nPress 1 for " +
                     "Current Account, press 2 for Saving Account: ");
             int accountType = scanner.nextInt();
             if (accountType == 1){
-                getCurrentAccountsData();
+                getCurrentAccountData();
 
             }else  if(accountType==2){
                 getSavingsAccountsData();
             }else {
                 System.out.println("Invalid Input");
             }
-            System.out.print("Do you want to Quit The program.Press 1 to quit: ");
+            System.out.print("Do you want to Quit The Saving/Current Account program.\n" +
+                    "Press 1 to quit: ");
             int choice = scanner.nextInt();
             if(choice==1){
+                System.out.println("Thanks for using our system!");
                 break;
             }else if (choice ==2){
                 continue;
@@ -30,7 +34,7 @@ public class MainClass {
         }
 
     }
-    public static void withdraw(ArrayList<CurrentAccount> currentAccounts){
+    public static void currentAccountWithdraw(ArrayList<CurrentAccount> currentAccounts){
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter the client Account Number which to Withdraw Money from: ");
@@ -53,12 +57,10 @@ public class MainClass {
 
     }
 
-    public static void savingWithdraw(ArrayList<SavingsAccount> savingsAccounts){
+    public static void savingsAccountWithdraw(ArrayList<SavingsAccount> savingsAccounts){
         Scanner scanner = new Scanner(System.in);
-
         System.out.print("Enter the client Account Number which to Withdraw Money from: ");
         String accountToWithdrawMoney = scanner.nextLine();
-
         for (SavingsAccount savingsAccount: savingsAccounts){
             if(accountToWithdrawMoney.equals(savingsAccount.getAccountHolderNumber())){
                 System.out.print("Enter the Amount to Withdraw: ");
@@ -75,12 +77,13 @@ public class MainClass {
         }
 
     }
-    public static void deposit(ArrayList<CurrentAccount> currentAccounts){
+    public static void currentAccountDeposit(ArrayList<CurrentAccount> currentAccounts){
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the client Account Number which to deposit Money to: ");
         String accountToDepositMoney = scanner.nextLine();
 
         for (CurrentAccount currentAccount: currentAccounts){
+            scanner.nextLine();
             if(accountToDepositMoney.equals(currentAccount.getAccountHolderNumber())){
                 System.out.print("Enter the Amount to Deposit: ");
                 double amountToDeposit = scanner.nextDouble();
@@ -120,10 +123,10 @@ public class MainClass {
         }
 
     }
-    public static void getAccountsData(ArrayList<CurrentAccount> currentAccounts) {
-
+    public static void getCurrentAccountsData(ArrayList<CurrentAccount> currentAccounts) {
+//        ArrayList<CurrentAccount> currentAccounts = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter the number of Accounts to register: ");
+        System.out.print("Enter the number of Current Accounts to register: ");
         int numberOfCurrentAccounts = scanner.nextInt();
         scanner.nextLine();
 
@@ -151,14 +154,14 @@ public class MainClass {
     public static void getSavingsAccountsData(ArrayList<SavingsAccount> savingsAccounts) {
 
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter the number of Accounts to register: ");
+        System.out.print("Enter the number of Savings Accounts to register: ");
         int numberOfCurrentAccounts = scanner.nextInt();
         scanner.nextLine();
-
         for (int i = 0; i < numberOfCurrentAccounts; i++) {
             System.out.println("Enter the Account for " + (i + 1) + " : ");
             System.out.print("Enter Account Holder Number: ");
             String accountHolderNumber = scanner.nextLine();
+//            ArrayList<CurrentAccount> currentAccounts = getCurrentAccountsData();
             System.out.print("Enter Account Holder ID: ");
             String accountHolderId = scanner.nextLine();
             System.out.print("Enter Account Holder Email Address: ");
@@ -173,27 +176,41 @@ public class MainClass {
             savingsAccounts.add(savingsAccount);
         }
     }
-    public static void getCurrentAccountsData(){
+
+    public static void getCurrentAccountData(){
         Scanner scanner = new Scanner(System.in);
         ArrayList<CurrentAccount> currentAccounts = new ArrayList<>();
-        getAccountsData(currentAccounts);
-        printDetails(currentAccounts);
+        getCurrentAccountsData(currentAccounts);
+        printCurrentDetails(currentAccounts);
         System.out.println();
-        System.out.print("Do you want to Deposit or Withdraw.\n" +
-                "Press 1 for Deposit or 2 for Withdrawal ");
-        int actionType = scanner.nextInt();
-        if (actionType ==1){
-            deposit(currentAccounts);
-        }else if(actionType==2) {
-            withdraw(currentAccounts);
+        while(true){
+            System.out.print("Do you want to Deposit or Withdraw.\n" +
+                    "Press 1 for Deposit or 2 for Withdrawal: ");
+            int actionType = scanner.nextInt();
+            if (actionType ==1){
+                currentAccountDeposit(currentAccounts);
+            }else if(actionType==2) {
+                currentAccountWithdraw(currentAccounts);
+            }
+            else {
+                System.out.println("Invalid Input");
+            }
+
+            System.out.print("Do you want to Quit The Deposit or Withdraw Program.\nPress 1 to quit,press 2 to continue : ");
+            int choice = scanner.nextInt();
+            if(choice==1){
+                break;
+            }else if (choice == 2){
+                continue;
+            }else {
+                System.out.println("Invalid Input");
+            }
         }
-        else {
-            System.out.println("Invalid Input");
-        }
+
 
 
     }
-    public static void printDetails(ArrayList<CurrentAccount> accounts){
+    public static void printCurrentDetails(ArrayList<CurrentAccount> accounts){
         System.out.println();
         System.out.println("Printing account Details");
         System.out.println("=======================================================");
@@ -230,7 +247,7 @@ public class MainClass {
             if (actionType ==1){
                 savingAccountDeposit(savingsAccounts);
             }else if(actionType==2) {
-                savingWithdraw(savingsAccounts);
+                savingsAccountWithdraw(savingsAccounts);
             }
             else {
                 System.out.println("Invalid Input");

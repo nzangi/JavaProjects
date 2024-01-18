@@ -51,7 +51,7 @@ public class CurrentAccount extends Account{
         System.out.println("Account Holder Id : "+getAccountHolderId());
         System.out.println("Account Holder Email Address : "+getAccountHolderEmailAddress());
         System.out.println("Account Holder Telephone Number : "+getAccountHolderTelephoneNumber());
-        System.out.println("Holder Account Balance (KSH): "+accountBalance);
+        System.out.println("Holder Current Account Balance (KSH): "+accountBalance);
         System.out.println("Account date of registration : "+formatter.format(date));
         System.out.println();
         System.out.println("=======================================================");

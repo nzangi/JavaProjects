@@ -5,8 +5,7 @@ import java.util.Date;
 public class SavingsAccount extends Account{
     public static int savingAccountWithdrawPerMonth=1;
     private double accountBalance;
-    private final CurrentAccount currentAccount;
-//    private final Date date;
+    private final Date date;
     private Date lastWithdrawalDate;
 
 
@@ -14,25 +13,38 @@ public class SavingsAccount extends Account{
     public SavingsAccount(String accountHolderNumber, String accountHolderId, String accountHolderEmailAddress, String accountHolderTelephoneNumber,double accountBalance) {
         super(accountHolderNumber, accountHolderId, accountHolderEmailAddress, accountHolderTelephoneNumber);
         this.accountBalance = accountBalance;
-//        date = new Date();
+        date = new Date();
         this.lastWithdrawalDate = new Date();
-        this.currentAccount = new CurrentAccount(accountHolderNumber,accountHolderId,accountHolderEmailAddress,accountHolderTelephoneNumber,accountBalance);
 
     }
 
 
     @Override
     public void deposit(double amountToDeposit) {
-        currentAccount.deposit(amountToDeposit);
+        if (amountToDeposit > 0){
+            accountBalance += amountToDeposit;
+            System.out.println("Deposit of "+amountToDeposit+" was successful");
+
+        }else {
+            System.out.println("Deposit of "+amountToDeposit+" was not successful");
+
+        }
     }
 
     @Override
     public  void withdraw(double amountToWithdraw) {
-        if(canWithdraw()){
-            currentAccount.withdraw(amountToWithdraw);
-            System.out.println("Withdrawal successful. Your current balance is KSH: " + getAccountBalance());
-            lastWithdrawalDate = new Date();
-            savingAccountWithdrawPerMonth--;
+        if(savingAccountWithdrawPerMonth== 1 || canWithdraw()){
+            if(amountToWithdraw > 0 && accountBalance >=amountToWithdraw){
+                accountBalance -= amountToWithdraw;
+                System.out.println("Withdrawal of "+amountToWithdraw+" was successful");
+                lastWithdrawalDate = new Date();
+                savingAccountWithdrawPerMonth--;
+
+            }else {
+                System.out.println("You don't have sufficient funds to withdraw "+amountToWithdraw+" from your account." +
+                        "Your account balance is "+ accountBalance);
+            }
+
         }else {
             System.out.println("Sorry, you can only make 1 withdrawal per 30 days in saving account.");
         }
@@ -47,12 +59,20 @@ public class SavingsAccount extends Account{
 
     }
     public void displayAccountDetails(){
-        currentAccount.displayAccountDetails();
+        SimpleDateFormat formatter = new SimpleDateFormat ("dd/MM/yyyy hh:mm:ss a");
+        System.out.println("Account Holder Number :"+getAccountHolderNumber());
+        System.out.println("Account Holder Id : "+getAccountHolderId());
+        System.out.println("Account Holder Email Address : "+getAccountHolderEmailAddress());
+        System.out.println("Account Holder Telephone Number : "+getAccountHolderTelephoneNumber());
+        System.out.println("Holder Saving Account Balance (KSH): "+accountBalance);
+        System.out.println("Account date of registration : "+formatter.format(date));
+        System.out.println();
+        System.out.println("=======================================================");
 
     }
 
     public double getAccountBalance() {
-        return currentAccount.getAccountBalance();
+        return accountBalance;
     }
 
 }
