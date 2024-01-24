@@ -6,44 +6,70 @@ import java.util.Scanner;
 public class MainClass {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        runAddVehicle();
         while (true) {
-            System.out.print("Enter type of vehicle to add. Press 1 for Car, 2 for Lorry: ");
-            int vehicleChoice = scanner.nextInt();
-            if (vehicleChoice == 1) {
-                addVehicleCar();
+            try {
+                System.out.print("Do you want to exit the program,Press 1 to exit,2 to continue: ");
+                int exitMainProgram = scanner.nextInt();
+                if (exitMainProgram == 1) {
+                    System.out.println("Existing the main program....");
+                    break;
+                } else if (exitMainProgram == 2) {
+                    runAddVehicle();
+                } else {
+                    System.out.println("Invalid output");
+                }
+            }catch (Exception e){
+                System.out.println("Invalid Input");
+                scanner.nextLine();
+            }
 
-            } else if (vehicleChoice == 2) {
-                addVehicleLorry();
-            } else {
-                System.out.println("Invalid output");
-            }
-            System.out.print("Do you want to exit the program,Press 1 to exit,2 to continue: ");
-            int exitMainProgram = scanner.nextInt();
-            if (exitMainProgram == 1) {
-                System.out.println("Existing the main program....");
-                break;
-            } else if (exitMainProgram == 2) {
-                continue;
-            } else {
-                System.out.println("Invalid output");
-            }
         }
 
     }
+    public static void runAddVehicle() {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            try {
+                System.out.print("Enter type of vehicle to add. Press 1 for Car, 2 for Lorry: ");
+                int vehicleChoice = scanner.nextInt();
+                if (vehicleChoice == 1) {
+                    addVehicle(vehicleChoice);
+                    return;
 
-    public static void addVehicleCar() {
+                } else if (vehicleChoice == 2) {
+                    addVehicle(vehicleChoice);
+                    return;
+                } else {
+                    System.out.println("Invalid output");
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid Input");
+                scanner.nextLine();
+            }
+        }
+    }
+
+    public static void addVehicle(int vehicleChoice) {
         Scanner scanner = new Scanner(System.in);
         String carName;
         String carModel;
         double carBuyingPrice;
         ArrayList<VehicleCar> vehicleAddCars = new ArrayList<>();
-        System.out.print("Enter the number of cars you want to add: ");
+        ArrayList<VehicleLorry> vehicleAddLorries = new ArrayList<>();
+        String vehicleName;
+        if (vehicleChoice==1){
+            vehicleName = "car";
+        }else {
+            vehicleName = "lorry";
+        }
+        System.out.print("Enter the number of "+vehicleName+" you want to add: ");
         int numberOfCars = scanner.nextInt();
         for (int i = 0; i < numberOfCars; i++) {
             scanner.nextLine();
             while (true) {
                 try {
-                    System.out.print("Enter the Car Name for car number " + (i + 1) + " : ");
+                    System.out.print("Enter the "+vehicleName+" Name for "+vehicleName+" number " + (i + 1) + " : ");
                     carName = scanner.nextLine();
                     break;
                 } catch (Exception e) {
@@ -54,7 +80,7 @@ public class MainClass {
             while (true) {
                 try {
 
-                    System.out.print("Enter the Car Model for car number " + (i + 1) + " : ");
+                    System.out.print("Enter the "+vehicleName+" Model for "+vehicleName+" number " + (i + 1) + " : ");
                     carModel = scanner.nextLine();
                     break;
                 } catch (Exception e) {
@@ -64,7 +90,7 @@ public class MainClass {
             }
             while (true) {
                 try {
-                    System.out.print("Enter the Car Buying price for car number " + (i + 1) + " : ");
+                    System.out.print("Enter the "+vehicleName+" Buying price for "+vehicleName+" number " + (i + 1) + " : ");
                     carBuyingPrice = scanner.nextDouble();
                     break;
                 } catch (Exception e) {
@@ -72,71 +98,34 @@ public class MainClass {
                     scanner.nextLine();
                 }
             }
-            VehicleCar vehicleCar = new VehicleCar(carName, carModel, carBuyingPrice);
-            vehicleAddCars.add(vehicleCar);
+            if (vehicleChoice ==1){
+                VehicleCar vehicleCar = new VehicleCar(carName, carModel, carBuyingPrice);
+                vehicleAddCars.add(vehicleCar);
+            }else {
+                VehicleLorry vehicleLorry = new VehicleLorry(carName, carModel, carBuyingPrice);
+                vehicleAddLorries.add(vehicleLorry);
+            }
+
 
         }
-        System.out.println();
-        System.out.println("Printing the Added Car Details: ");
-        for (VehicleCar vehicleCar : vehicleAddCars) {
+        if (vehicleChoice==1){
             System.out.println();
-            System.out.println(vehicleCar);
+            System.out.println("Printing the Added Car Details: ");
+            for (VehicleCar vehicleCar : vehicleAddCars) {
+                System.out.println();
+                System.out.println(vehicleCar);
+            }
+        }else {
+            System.out.println();
+            System.out.println("Printing the Added Lorry Details: ");
+            for (VehicleLorry vehicleLorry : vehicleAddLorries ) {
+                System.out.println();
+                System.out.println(vehicleLorry);
+            }
         }
 
     }
-
-    public static void addVehicleLorry() {
-        Scanner scanner = new Scanner(System.in);
-        String lorryName;
-        String lorryModel;
-        double lorryBuyingPrice;
-        ArrayList<VehicleLorry> vehicleAddLorries = new ArrayList<>();
-        System.out.print("Enter the number of lorries you want to add: ");
-        int numberOfCars = scanner.nextInt();
-        for (int i = 0; i < numberOfCars; i++) {
-            scanner.nextLine();
-            while (true) {
-                try {
-                    System.out.print("Enter the Lorry Name for Lorry number " + (i + 1) + " : ");
-                    lorryName = scanner.nextLine();
-                    break;
-                } catch (Exception e) {
-                    System.out.println("Invalid data type");
-                    scanner.nextLine();
-                }
-            }
-            while (true) {
-                try {
-
-                    System.out.print("Enter the Lorry Model for Lorry number " + (i + 1) + " : ");
-                    lorryModel = scanner.nextLine();
-                    break;
-                } catch (Exception e) {
-                    System.out.println("Invalid data type");
-                    scanner.nextLine();
-                }
-            }
-            while (true) {
-                try {
-                    System.out.print("Enter the Lorry Buying price for Lorry number " + (i + 1) + " : ");
-                    lorryBuyingPrice = scanner.nextDouble();
-                    break;
-                } catch (Exception e) {
-                    System.out.println("Invalid data type");
-                    scanner.nextLine();
-                }
-            }
-            VehicleLorry vehicleLorry = new VehicleLorry(lorryName, lorryModel, lorryBuyingPrice);
-            vehicleAddLorries.add(vehicleLorry);
-        }
-
-
-        System.out.println();
-        System.out.println("Printing the Added Lorry Details: ");
-        for (VehicleLorry vehicleLorry : vehicleAddLorries ) {
-            System.out.println();
-            System.out.println(vehicleLorry);
-        }
-
+    public static void removeVehicle(){
+//This method will be responsible for removing vehicle from list
     }
 }

@@ -12,6 +12,8 @@ public abstract class Vehicle {
         this.vehicleBuyingPrice = vehicleBuyingPrice;
         date = new Date();
     }
+
+
     public abstract void  addVehicle();
     public abstract void removeVehicle();
 
