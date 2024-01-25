@@ -1,9 +1,11 @@
 package vehiclemanagement;
 
 public class VehicleCar extends Vehicle{
+    private int carIdNumber;
 
-    public VehicleCar(String vehicleName, String vehicleModel, double vehicleBuyingPrice) {
+    public VehicleCar(int carIdNumber,String vehicleName, String vehicleModel, double vehicleBuyingPrice) {
         super(vehicleName, vehicleModel, vehicleBuyingPrice);
+        this.carIdNumber= carIdNumber;
     }
 
     @Override
@@ -19,7 +21,7 @@ public class VehicleCar extends Vehicle{
 
     @Override
     public String toString() {
-        return "The vehicle Name is "+this.getVehicleName()+" and the model " +
+        return "Car id is "+carIdNumber+" , the vehicle Name is "+this.getVehicleName()+" and the model " +
                 "is "+this.getVehicleModel()+ "\nThe buying price of teh car is :USD  " +
                 ""+this.getVehicleBuyingPrice()+"\nCreation Date : " +this.getDate();
     }
