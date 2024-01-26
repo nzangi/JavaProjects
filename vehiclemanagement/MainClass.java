@@ -27,20 +27,24 @@ public class MainClass {
         }
 
     }
-    public static void runAddVehicle() {
+    //This method will be responsible for running vehicle from arrayList to add vehicles in list
+    // and also remove them by passing arguments
+
+    public static ArrayList<VehicleCar> runAddVehicle() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             try {
                 System.out.print("Enter type of vehicle to add. Press 1 for Car, 2 for Lorry: ");
                 int vehicleChoice = scanner.nextInt();
                 if (vehicleChoice == 1) {
-                    addVehicle(vehicleChoice);
-                    removeVehicle();
-                    return;
+                    ArrayList<VehicleCar> vehicleAddCars = addVehicle(vehicleChoice);
+                    removeVehicle(vehicleAddCars);
+                    return vehicleAddCars;
 
                 } else if (vehicleChoice == 2) {
-                    addVehicle(vehicleChoice);
-                    return;
+                    ArrayList<VehicleCar> vehicleAddLorry = addVehicle(vehicleChoice);
+                    removeVehicle(vehicleAddLorry);
+                    return vehicleAddLorry;
                 } else {
                     System.out.println("Invalid output");
                 }
@@ -50,8 +54,9 @@ public class MainClass {
             }
         }
     }
+    //This method will be responsible for adding vehicle from arrayList
 
-    public static String[] addVehicle(int vehicleChoice) {
+    public static ArrayList<VehicleCar> addVehicle(int vehicleChoice) {
         Scanner scanner = new Scanner(System.in);
         String carName;
         String carModel;
@@ -110,7 +115,6 @@ public class MainClass {
             }
 
         }
-        String [] vehiclesDataArray = {String.valueOf(vehicleAddCars), String.valueOf(vehicleAddLorries)};
 
         if (vehicleChoice==1){
             System.out.println();
@@ -127,23 +131,20 @@ public class MainClass {
                 System.out.println(vehicleLorry);
             }
         }
+        return vehicleAddCars;
 
-        return vehiclesDataArray;
     }
-    public static void removeVehicle(){
+    //This method will be responsible for removing vehicle from list
+
+    public static void removeVehicle(ArrayList<VehicleCar> vehicleAddCars){
         Scanner scanner = new Scanner(System.in);
-//        ArrayList<VehicleLorry> vehicleAddLorries = addVehicle()[];
         System.out.print("Enter the car you want to remove, to remove car press 1, \n" +
                 "to remove lorry press 2: ");
         int vehicleToRemove = scanner.nextInt();
         if (vehicleToRemove==1){
-            String vehicleAddCars = addVehicle(vehicleToRemove)[0];
-            System.out.println(vehicleAddCars);
-
+            for (VehicleCar vehicleCar: vehicleAddCars){
+                System.out.println(vehicleCar);
+            }
         }
-
-
-
-//This method will be responsible for removing vehicle from list
     }
 }
