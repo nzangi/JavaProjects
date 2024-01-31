@@ -13,10 +13,9 @@ public class Animal <T> {
     public String getAnimalName(){
         return animalName;
     }
-    public void printSpecificAnimal(Animal<T> animal){
-        System.out.println("The "+animal.getClass().getSimpleName()+" name is " +
+    public String printSpecificAnimal(Animal<T> animal){
+        return "The "+animal.getClass().getSimpleName()+" name is " +
                 ""+animal.getAnimalName() + " and "+animal.getClass().getSimpleName().toLowerCase()+" " +
-                "and "+animal.getAnimalAge());
-
+                "and "+animal.getAnimalAge();
     }
 }
