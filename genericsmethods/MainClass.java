@@ -3,30 +3,37 @@ package genericsmethods;
 import java.util.ArrayList;
 
 public class MainClass {
-    public static void main(String[] args) {
-        ArrayList<String> strings = new ArrayList<>();
-        strings.add("X");
-        strings.add("Y");
-        strings.add("Z");
-        strings.add("A");
+    public static  void main(String[] args) {
+        ArrayList<?> strings = new ArrayList<>();
+//        strings.add("X");
+//        strings.add("Y");
+//        strings.add("Z");
+//        strings.add("A");
 //        shout(strings);
 
-        ArrayList<Integer> integers = new ArrayList<>();
-        integers.add(1);
-        integers.add(2);
-        integers.add(3);
-        integers.add(4);
+        ArrayList<?> integers = new ArrayList<>();
+//        integers.add(1);
 
-        ArrayList<?> arrayLists = shout(strings);
         ArrayList<?> arrayListIntegers = shout(integers);
+        System.out.println("Started Printing");
+
+        for (Object arrayList:arrayListIntegers){
+            System.out.println(arrayList);
+        }
+        System.out.println("Done Printing");
+
 
 
     }
     public static <T> ArrayList<T>  shout(ArrayList<T> arrayLists){
-        for (T arrayList:arrayLists){
-            System.out.println(arrayList);
-        }
-        System.out.println("Done Printing");
-        return new ArrayList<T>();
+        arrayLists.add((T) Integer.valueOf(1));
+        arrayLists.add((T) "weeeeh");
+        arrayLists.add((T) Integer.valueOf(3));
+
+//        for (T arrayList:arrayLists){
+//            System.out.println(arrayList);
+//        }
+        System.out.println("Returned ArrayList");
+        return arrayLists;
     }
 }
